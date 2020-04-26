@@ -14,7 +14,19 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def self.by_author(author_id)
+    where(author: author_id)
+  end
+
   def make_title_case
     self.title = self.title.titlecase
+  end
+
+  def self.from_today
+    where("created_at >=?", Time.zone.today.beginning_of_day)
+  end
+   
+  def self.old_news
+    where("created_at <?", Time.zone.today.beginning_of_day)
   end
 end
